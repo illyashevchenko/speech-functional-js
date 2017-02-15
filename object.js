@@ -1,9 +1,14 @@
 'use strict';
 
-const R = require('ramda');
+const { pipe, pick, values, join } = require('ramda');
 
-const stringValues = R.pipe(
-  R.pick, R.values, R.join(', ')
+const stringValues = pipe(
+  pick,
+  values,
+  join(', ')
 );
 
-stringValues(['a', 'b'], { a: 1, b: 2, C: 3 });
+stringValues(
+  ['a', 'b'],
+  { a: 1, b: 2, C: 3 }
+);
