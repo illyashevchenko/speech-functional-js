@@ -90,3 +90,13 @@ const nameListComposed = pipe(
 );
 
 console.log(nameListComposed(data));
+
+function getNamesLodashChain(data) {
+  /* global _ */
+  return _(data)
+    .filter({ type: 'proper' })
+    .map('list')
+    .flatten()
+    .map('name')
+    .join('; ');
+}
