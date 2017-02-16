@@ -9,6 +9,7 @@ const log = pipe(
   apply(pipe),
   tap
 );
+
 const idList = pipe(
   map(prop('id')),
   logSimple,

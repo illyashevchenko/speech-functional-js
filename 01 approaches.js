@@ -2,6 +2,7 @@
 
 'use strict';
 
+const { pipe, filter, propEq, map, prop, flatten, join } = require('ramda');
 
 const data = [
   {
@@ -39,7 +40,7 @@ function getNamesList(data) {
 
     for (let k = 0; k < entry.list.length; k++) {
       const item = entry.list[k];
-      names += `${ item.name };`;
+      names += `${ item.name }; `;
     }
   }
   return names && names.slice(0, names.length - 2);
@@ -62,3 +63,30 @@ function getNamesListDeclarative(data) {
 }
 
 console.log(getNamesListDeclarative(data));
+
+const nameList = pipe(
+  filter(propEq('type', 'proper')),
+  map(prop('list')),
+  flatten,
+  map(prop('name')),
+  join('; ')
+);
+
+console.log(nameList(data));
+
+const properList = pipe(
+  filter(propEq('type', 'proper')),
+  map(prop('list')),
+  flatten
+);
+const names = pipe(
+  map(prop('name')),
+  join('; ')
+);
+
+const nameListComposed = pipe(
+  properList,
+  names
+);
+
+console.log(nameListComposed(data));
