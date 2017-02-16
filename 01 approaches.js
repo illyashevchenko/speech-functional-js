@@ -48,7 +48,7 @@ function getNamesList(data) {
 
 console.log(getNamesList(data));
 
-Array.prototype.flattern = function () {
+Array.prototype.flatten = function () {
   return this.concat.apply([], this);
 };
 
@@ -56,7 +56,7 @@ function getNamesListDeclarative(data) {
   return data
     .filter((item) => item.type === 'proper')
     .map((item) => item.list)
-    .flattern()
+    .flatten()
     .map((item) => item.name)
     .join('; ');
 }
