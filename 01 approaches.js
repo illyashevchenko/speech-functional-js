@@ -28,7 +28,7 @@ const data = [
   },
 ];
 
-function getNamesList(data) {
+function getNameList(data) {
   let names = '';
 
   for (let i = 0; i < data.length; i++) {
@@ -43,17 +43,18 @@ function getNamesList(data) {
       names += `${ item.name }; `;
     }
   }
+
   return names && names.slice(0, names.length - 2);
 }
 
 
-console.log(getNamesList(data));
+console.log(getNameList(data));
 
 Array.prototype.flatten = function () {
   return this.concat.apply([], this);
 };
 
-function getNamesListDeclarative(data) {
+function getNameListDeclarative(data) {
   return data
     .filter((item) => item.type === 'proper')
     .map((item) => item.list)
@@ -62,7 +63,27 @@ function getNamesListDeclarative(data) {
     .join('; ');
 }
 
-console.log(getNamesListDeclarative(data));
+console.log(getNameListDeclarative(data));
+
+function getProperList(data) {
+  return data
+    .filter((item) => item.type === 'proper')
+    .map((item) => item.list)
+    .flatten();
+}
+
+function getNames(data) {
+  return data
+    .map((item) => item.name)
+    .join('; ');
+}
+
+function getNameListParts(data) {
+  const properList = getProperList(data);
+  return getNames(properList);
+}
+
+console.log(getNameListParts(data));
 
 const nameList = pipe(
   filter(propEq('type', 'proper')),
