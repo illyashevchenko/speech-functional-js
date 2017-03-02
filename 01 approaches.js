@@ -1,5 +1,3 @@
-/*eslint no-continue: 0, no-plusplus: 0, no-extend-native: 0  */
-
 'use strict';
 
 const { pipe, filter, propEq, map, prop, flatten, join } = require('ramda');
@@ -29,6 +27,7 @@ const data = [
 ];
 
 function getNameList(data) {
+  /* eslint no-continue: 0, no-plusplus: 0  */
   let names = '';
 
   for (let i = 0; i < data.length; i++) {
@@ -50,6 +49,7 @@ function getNameList(data) {
 
 console.log(getNameList(data));
 
+/* eslint no-extend-native: 0 */
 Array.prototype.flatten = function () {
   return this.concat.apply([], this);
 };
