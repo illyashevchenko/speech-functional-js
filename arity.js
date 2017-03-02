@@ -1,12 +1,12 @@
 'use strict';
 
-const R = require('ramda');
+const { constructN, invoker, pipe } = require('ramda');
 
-const toIsoDate = R.pipe(
-  R.constructN(1, Date),
-  R.invoker(0, 'toISOString')
+const toIsoDate = pipe(
+  constructN(1, Date),
+  invoker(0, 'toISOString')
 );
 
-toIsoDate('2017-01-02');
-toIsoDate(1486926911751);
-toIsoDate('Feb 12 2017');
+console.log(toIsoDate('2017-01-02'));
+console.log(toIsoDate(1486926911751));
+console.log(toIsoDate('Feb 12 2017'));
