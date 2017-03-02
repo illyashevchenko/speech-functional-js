@@ -47,7 +47,7 @@ function getNameList(data) {
 }
 
 
-console.log(getNameList(data));
+getNameList(data);
 
 /* eslint no-extend-native: 0 */
 Array.prototype.flatten = function () {
@@ -63,7 +63,7 @@ function getNameListDeclarative(data) {
     .join('; ');
 }
 
-console.log(getNameListDeclarative(data));
+getNameListDeclarative(data);
 
 function getProperList(data) {
   return data
@@ -83,7 +83,7 @@ function getNameListParts(data) {
   return getNames(properList);
 }
 
-console.log(getNameListParts(data));
+getNameListParts(data);
 
 const nameList = pipe(
   filter(propEq('type', 'proper')),
@@ -93,7 +93,7 @@ const nameList = pipe(
   join('; ')
 );
 
-console.log(nameList(data));
+nameList(data);
 
 const properList = pipe(
   filter(propEq('type', 'proper')),
@@ -110,7 +110,7 @@ const nameListComposed = pipe(
   names
 );
 
-console.log(nameListComposed(data));
+nameListComposed(data);
 
 function getNamesLodashChain(data) {
   /* global _ */
@@ -121,3 +121,5 @@ function getNamesLodashChain(data) {
     .map('name')
     .join('; ');
 }
+
+module.exports = { getNamesLodashChain, data, getProperList, getNames };
