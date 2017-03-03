@@ -1,8 +1,9 @@
 'use strict';
 
-const { filter, propEq, map, prop, useWith, identity, whereEq, apply } = require('ramda');
+const { filter, propEq, map, prop, useWith, identity, whereEq, apply, pipe, flatten, join } = require('ramda');
+const { data } = require('./01 approaches');
 
-const data = [
+const samples = [
   { id: 1, type: 'a', nested: [1] },
   { id: 2, type: 'b', nested: [2] },
   { id: 3, type: 'a', enabled: true },
@@ -11,12 +12,22 @@ const data = [
 
 // emulation for Lodash's filter and map declarative
 
-const mapP = useWith(map, [prop, identity]);
-const filterP = useWith(filter, [prop, identity]);
-const filterM = useWith(filter, [whereEq, identity]);
-const filterMp = useWith(filter, [apply(propEq), identity]);
+const mapProp = useWith(map, [prop, identity]);
+const filterMatch = useWith(filter, [whereEq, identity]);
+const filterProp = useWith(filter, [prop, identity]);
+const filterPropEq = useWith(filter, [apply(propEq), identity]);
 
-mapP('id')(data); // map with property shortcut
-filterP('enabled')(data); // filter property shortcut
-filterMp(['type', 'b'], data); // filter matchProperty shortcut
-filterM({ nested: [1] }, data); // filter match shortcut
+mapProp('id', samples); // map with property shortcut
+filterProp('enabled')(samples); // filter property shortcut
+filterPropEq(['type', 'b'], samples); // filter matchProperty shortcut
+filterMatch({ nested: [1] }, samples); // filter match shortcut
+
+const nameList = pipe(
+  filterMatch({ type: 'proper' }),
+  mapProp('list'),
+  flatten,
+  mapProp('name'),
+  join('; ')
+);
+
+console.log(nameList(data));
