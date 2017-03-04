@@ -1,6 +1,9 @@
 'use strict';
 
-const { filter, propEq, map, prop, useWith, identity, whereEq, apply, pipe, flatten, join } = require('ramda');
+const { pipe, flatten, join } = require('ramda');
+
+const { mapProp, filterMatch, filterProp, filterPropEq } = require('./shorcuts');
+
 const { logSimple, logMsg } = require('./debugging');
 const { data } = require('./01 approaches');
 
@@ -10,13 +13,6 @@ const samples = [
   { id: 3, type: 'a', enabled: true },
   { id: 4, type: 'b' },
 ];
-
-// emulation for Lodash's filter and map declarative
-
-const mapProp = useWith(map, [prop, identity]);
-const filterMatch = useWith(filter, [whereEq, identity]);
-const filterProp = useWith(filter, [prop, identity]);
-const filterPropEq = useWith(filter, [apply(propEq), identity]);
 
 mapProp('id', samples); // map with property shortcut
 filterProp('enabled')(samples); // filter property shortcut
