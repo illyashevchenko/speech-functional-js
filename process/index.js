@@ -9,6 +9,9 @@ const loader = pipe(
   require
 );
 
+const loadOld = (item) =>
+  require(`./actions/${ item.name }`)(item.config); // eslint-disable-line global-require, import/no-dynamic-require
+
 const loadOne = converge(call, [loader, prop('config')]);
 const load = map(loadOne);
 
@@ -17,4 +20,4 @@ const loadEnabled = pipe(
   load
 );
 
-module.exports = { load, loadEnabled };
+module.exports = { load, loadEnabled, loadOld };

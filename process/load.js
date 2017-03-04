@@ -1,6 +1,6 @@
 'use strict';
 
-const { loadEnabled } = require('./');
+const { loadEnabled, loadOld } = require('./');
 
 const actions = [
   { name: 'develop', enabled: true, config: { someProp: '' } },
@@ -11,3 +11,5 @@ const actions = [
 ];
 
 console.log(loadEnabled(actions));
+
+console.log(loadOld(actions[0]));
