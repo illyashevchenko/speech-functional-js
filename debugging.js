@@ -1,35 +1,34 @@
 'use strict';
 
-const { tap, pipe, map, filter, join, identity, prop, concat, append, useWith, apply } = require('ramda');
+const { tap, pipe, identity, concat, append, useWith, apply, of, partial, uncurryN, __ } = require('ramda');
 
 const logSimple = tap(console.log);
 
-const logPipe = pipe(
+const logMsg = pipe(
+  of,
+  partial(console.log),
+  tap
+);
+
+const createLog = pipe(
   Array,
   append(console.log),
   apply(pipe),
   tap
 );
 
-const log = useWith(logPipe, [identity, concat]);
+const log = useWith(createLog, [identity, concat]);
 const logJson = log(JSON.stringify);
 const logKeys = log(Object.keys);
 
-logJson('Just: ')({ id: 3 });
-logKeys('Keys: ')({ id: 4, name: '1' });
-
-const idList = pipe(
-  map(prop('id')),
-  logSimple,
-  filter(identity),
-  logJson('After filter: '),
-  join('; '),
-  logJson('Result: ')
+const logStrings = pipe(
+  concat,
+  logSimple
 );
 
-idList([
-  { id: '4' },
-  { id: '3' },
-  {},
-]);
+const trueLog = uncurryN(3, pipe(
+  append(__, [identity]),
+  useWith(logStrings)
+));
 
+module.exports = { logSimple, log, logJson, logKeys, logMsg, trueLog };
