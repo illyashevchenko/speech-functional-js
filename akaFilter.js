@@ -1,7 +1,7 @@
 'use strict';
 
 const { filter, propEq, map, prop, useWith, identity, whereEq, apply, pipe, flatten, join } = require('ramda');
-const { logSimple, logJson } = require('./debugging');
+const { logSimple, logMsg } = require('./debugging');
 const { data } = require('./01 approaches');
 
 const samples = [
@@ -25,9 +25,10 @@ filterMatch({ nested: [1] }, samples); // filter match shortcut
 
 const nameList = pipe(
   filterMatch({ type: 'proper' }),
-  logJson('After filter: '),
+  logMsg('Filtered: '),
   mapProp('list'),
   flatten,
+  logMsg('Flat list: '),
   mapProp('name'),
   join('; '),
   logSimple
