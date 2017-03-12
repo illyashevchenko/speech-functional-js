@@ -1,6 +1,7 @@
 'use strict';
 
-const { pipe, filter, propEq, map, prop, flatten, join } = require('ramda');
+const { pipe, filter, whereEq, map, prop, flatten, join } = require('ramda');
+const { logSimple } = require('./debugging');
 
 const data = [
   {
@@ -86,7 +87,7 @@ function getNameListParts(data) {
 getNameListParts(data);
 
 const nameList = pipe(
-  filter(propEq('type', 'proper')),
+  filter(whereEq({ type: 'proper' })),
   map(prop('list')),
   flatten,
   map(prop('name')),
@@ -96,7 +97,7 @@ const nameList = pipe(
 nameList(data);
 
 const properList = pipe(
-  filter(propEq('type', 'proper')),
+  filter(whereEq({ type: 'proper' })),
   map(prop('list')),
   flatten
 );
@@ -122,4 +123,4 @@ function getNamesLodashChain(data) {
     .join('; ');
 }
 
-module.exports = { getNamesLodashChain, data, getProperList, getNames };
+module.exports = { getNamesLodashChain, data, getProperList, getNames, logSimple };
