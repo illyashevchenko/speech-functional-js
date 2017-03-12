@@ -1,6 +1,6 @@
 'use strict';
 
-const { pipe, map, filter, join, identity, prop } = require('ramda');
+const { pipe, map, filter, join, identity, prop, head } = require('ramda');
 const { logSimple, log, logJson, logKeys, logMsg, trueLog } = require('./debugging');
 
 logJson('logJson: ')({ id: 3 });
@@ -14,6 +14,7 @@ trueLog(JSON.stringify, 'trueLog stringify 4: ', { id: 3 });
 
 const idList = pipe(
   logSimple,
+  log(pipe(head, JSON.stringify), 'First item: '),
   map(prop('id')),
   log(Object.keys, 'Before filter: '),
   filter(identity),
